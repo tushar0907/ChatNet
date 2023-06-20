@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
-// import { useAuth } from "@/context/authContext";
-// import Loader from "@/components/Loader";
+import { useAuth } from "@/context/authContext";
+import Loader from "@/components/Loader";
 
-// import {
-//     signInWithEmailAndPassword,
-//     GoogleAuthProvider,
-//     FacebookAuthProvider,
-//     signInWithPopup,
-//     sendPasswordResetEmail,
-// } from "firebase/auth";
-// import { auth } from "@/firebase/firebase";
+import {
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    FacebookAuthProvider,
+    signInWithPopup,
+    sendPasswordResetEmail,
+} from "firebase/auth";
+import { auth } from "@/firebase/firebase";
 // const gProvider = new GoogleAuthProvider();
 // const fProvider = new FacebookAuthProvider();
 
@@ -21,27 +21,44 @@ import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import Link from "next/link";
 
 const Login = () => {
-    // const router = useRouter();
-    // const { currentUser, isLoading } = useAuth();
+    const router = useRouter();
+    const { currentUser, isLoading } = useAuth();
     // const [email, setEmail] = useState("");
 
-    // useEffect(() => {
-    //     if (!isLoading && currentUser) {
-    //         router.push("/");
-    //     }
-    // }, [currentUser, isLoading]);
+    useEffect(() => {
+        if (!isLoading && currentUser) {
+            router.push("/");
+        }
+    }, [currentUser, isLoading]);
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const email = e.target[0].value;
-    //     const password = e.target[1].value;
+   
 
-    //     try {
-    //         await signInWithEmailAndPassword(auth, email, password);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
+    async function handleSubmit(e) {
+        e.preventDefault();
+        const email = e.target[0].value;
+        const password = e.target[1].value;
+      
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+      
+          // Redirect to the home page asynchronously
+          await router.push("/");
+        } catch (error) {
+          console.error(error);
+        }
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Redirect to the home page
+    router.push("/");
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
     // const resetPassword = async () => {
     //     try {
@@ -80,10 +97,10 @@ const Login = () => {
     //     }
     // };
 
-    // return isLoading || (!isLoading && !!currentUser) ? (
-    //     <Loader />
-    // ) : 
-    return (
+    return isLoading || (!isLoading && !!currentUser) ? (
+        <Loader />
+    ) : 
+     (
         <div className="h-[100vh] flex justify-center items-center bg-c1">
             {/* <ToastMessage /> */}
             <div className="flex items-center flex-col">
@@ -122,7 +139,7 @@ const Login = () => {
                 </div>
                 <form
                     className="flex flex-col items-center gap-3 w-[500px] mt-5"
-                    // onSubmit={handleSubmit}
+                    onSubmit={handleSubmit}
                 >
                     <input
                         type="email"
