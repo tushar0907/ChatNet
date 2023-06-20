@@ -33,31 +33,20 @@ const Login = () => {
 
    
 
-    async function handleSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const email = e.target[0].value;
         const password = e.target[1].value;
       
         try {
-          const userCredential = await signInWithEmailAndPassword(auth, email, password);
-          const user = userCredential.user;
-      
-          // Redirect to the home page asynchronously
-          await router.push("/");
-        } catch (error) {
-          console.error(error);
+          await signInWithEmailAndPassword(auth,
+            email,password);
+          } catch (err) {
+            console.error(err);
+          };
+
         }
-
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-
-    // Redirect to the home page
-    router.push("/");
-  } catch (error) {
-    console.error(error);
-  }
-}
+               
 
 
     // const resetPassword = async () => {
@@ -97,7 +86,8 @@ const Login = () => {
     //     }
     // };
 
-    return isLoading || (!isLoading && !!currentUser) ? (
+    return isLoading || (!isLoading && 
+        currentUser) ? (
         <Loader />
     ) : 
      (

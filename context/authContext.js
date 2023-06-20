@@ -10,20 +10,11 @@ export const UserProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const clear = async () => {
-        try {
-            if (currentUser) {
-                await updateDoc(doc(db, "users", currentUser?.uid), {
-                    isOnline: false,
-                });
-            }
-            setCurrentUser(null);
-            setIsLoading(false);
-        } catch (error) {
-            console.error(error);
-        }
+       setCurrentUser(null);
+       setIsLoading(false);
     };
 
-    const authStateChanged = async (user) => {
+    const authStateChanged = (user) => {
         setIsLoading(true);
         console.log(user);
         if (!user) {
@@ -31,16 +22,7 @@ export const UserProvider = ({ children }) => {
             return;
         }
 
-        const userDocExist = await getDoc(doc(db, "users", user.uid));
-        if (userDocExist.exists()) {
-            await updateDoc(doc(db, "users", user.uid), {
-                isOnline: true,
-            });
-        }
-
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-
-        setCurrentUser(userDoc.data());
+        setCurrentUser(user);
         setIsLoading(false);
     };
 

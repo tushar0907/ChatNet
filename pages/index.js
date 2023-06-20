@@ -4,35 +4,24 @@ import { useRouter } from 'next/router';
 
 
 const Home = () => {
-  const router = useRouter();
   const { signOut, currentUser, isLoading } = useAuth();
+  const router = useRouter();
 
-  // Check if the user is logged in
-  const isLoggedIn = currentUser !== null;
 
-  // Redirect to the login page if the user is not logged in
-  // if (!isLoggedIn) {
-  //   router.push("/login");
-  // }
 
-  // Handle the sign out event
-  const handleSignOut = () => {
-    signOut();
-    router.push("/login");
-  };
+  useEffect(() => {
+    if (!isLoading && !currentUser) {
+        router.push("/login");
+    }
+}, [currentUser, isLoading]);
+
+
 
   return (
-    <div>
-      {isLoggedIn ? (
-        <div>
-          <h1>Welcome,</h1>
-          <button onClick={handleSignOut} className='bg-black text-white'>
-            Sign Out
-          </button>
-        </div>
-      ) : null}
+    <div className='flex w-full bg-black text-white'>
+      <button onClick={signOut}>Sign Out</button>
     </div>
-  )
+  );
 }
 
 export default Home;
