@@ -1,7 +1,7 @@
 import React from "react";
 import PopupWrapper from "./PopupWrapper";
 import { useAuth } from "@/context/authContext";
-import { useChatContext } from "@/context/chatContext";
+// import { useChatContext } from "@/context/chatContext";
 import Avatar from "../Avatar";
 import { db } from "@/firebase/firebase";
 import {
@@ -11,11 +11,11 @@ import {
     setDoc,
     updateDoc,
 } from "firebase/firestore";
-import Search from "../Search";
+// import Search from "../Search";
 
 const UsersPopup = (props) => {
     const { currentUser } = useAuth();
-    const { users, dispatch } = useChatContext();
+    // const { users, dispatch } = useChatContext();
 
     const handleSelect = async (user) => {
         try {
@@ -75,7 +75,7 @@ const UsersPopup = (props) => {
 
     return (
         <PopupWrapper {...props}>
-            <Search />
+            {/* <Search /> */}
 
             <div className="mt-5 flex flex-col gap-2 grow relative overflow-auto scrollbar">
                 {/* <div className="absolute w-full">

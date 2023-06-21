@@ -16,7 +16,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db, auth, storage } from "@/firebase/firebase";
 import { updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-// import UsersPopup from "./popup/UsersPopup";
+import UsersPopup from "./popup/UsersPopup";
 
 const LeftNav = () => {
     const [usersPopup, setUsersPopup] = useState(false);
@@ -266,12 +266,12 @@ const LeftNav = () => {
                     onClick={signOut}
                 />
             </div>
-            {/* {usersPopup && (
+            {usersPopup && (
                 <UsersPopup
                     onHide={() => setUsersPopup(false)}
                     title="Find Users"
                 />
-            )} */}
+            )}
         </div>
     );
 };

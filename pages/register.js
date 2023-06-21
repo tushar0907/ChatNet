@@ -11,7 +11,7 @@ import {
     createUserWithEmailAndPassword,
     sendPasswordResetEmail,
 } from "firebase/auth";
-import { auth } from "@/firebase/firebase";
+import { auth, db } from "@/firebase/firebase";
 const gProvider = new GoogleAuthProvider();
 const fProvider = new FacebookAuthProvider();
 
@@ -20,6 +20,7 @@ import ToastMessage from "@/components/ToastMessage";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import {profileColors} from "@/utils/constants";
+import { doc, setDoc } from "firebase/firestore";
 
 const Register = () => {
     const router = useRouter();
@@ -39,47 +40,32 @@ const Register = () => {
         const colorIndex = Math.floor(Math.random() * profileColors.length);
 
         try {
-         const {user} = await createUserWithEmailAndPassword(auth, email, password);
+            const { user } = await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
 
-        await setDoc(doc(db, "users", user.uid),{
-            uid: user.uid,
-            displayName,
-            email,
-            color: profileColors[colorIndex]
-        })
+            await setDoc(doc(db, "users", user.uid), {
+                uid: user.uid,
+                displayName,
+                email,
+                color: profileColors[colorIndex],
+            });
 
-        await setDoc(doc(db, "userChats", user.uid))
+            await setDoc(doc(db, "userChats", user.uid), {});
 
-         await updateProfile(user , {
-            displayName,
-         });
+            await updateProfile(user, {
+                displayName,
+            });
 
-         router.push("/");
+            console.log(user);
+
+            router.push("/");
         } catch (error) {
             console.error(error);
         }
     };
-
-    // const resetPassword = async () => {
-    //     try {
-    //         toast.promise(
-    //             async () => {
-    //                 await sendPasswordResetEmail(auth, email);
-    //             },
-    //             {
-    //                 pending: "Generating reset link",
-    //                 success: "Reset email send to your registered email id.",
-    //                 error: "You may have entered wrong email id!",
-    //             },
-    //             {
-    //                 autoClose: 5000,
-    //             }
-    //         );
-    //         console.log("Email send to your registered email id.");
-    //     } catch (error) {
-    //         console.error("An error occured", error);
-    //     }
-    // };
 
     const signInWithGoogle = async () => {
         try {
