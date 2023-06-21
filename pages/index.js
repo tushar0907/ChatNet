@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/authContext';
 import { useRouter } from 'next/router';
 import LeftNav from '@/components/LeftNav';
+import Loader from '@/components/Loader';
 
 
 const Home = () => {
@@ -16,7 +17,9 @@ const Home = () => {
     }
 }, [currentUser, isLoading]);
 
-  return (
+  return !currentUser ? (
+    <Loader />
+) :  (
     // <div className='flex w-full bg-black text-white'>
     //   <button onClick={signOut}>Sign Out</button>
     // </div>
@@ -26,7 +29,7 @@ const Home = () => {
         <div className="flex bg-c2 grow">
             <div className="w-[400px] p-5 overflow-auto scrollbar shrink-0 border-r border-white/[0.05]">
                 <div className="flex flex-col h-full">
-                    {/* <Chats /> */}
+                    {/* <Chats /> */} 
                     side
                 </div>
             </div>
