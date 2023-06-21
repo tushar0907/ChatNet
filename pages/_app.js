@@ -1,6 +1,7 @@
 import {react, useEffect} from 'react';
 import { UserProvider } from '@/context/authContext';
 import '@/styles/globals.css';
+import { ChatContextProvider } from '@/context/chatContext';
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
@@ -10,7 +11,9 @@ export default function App({ Component, pageProps }) {
 
   return (
     <UserProvider>
-      <Component {...pageProps} />
+      <ChatContextProvider>
+          <Component {...pageProps} />
+      </ChatContextProvider> 
     </UserProvider>
   );
 }
