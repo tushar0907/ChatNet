@@ -13,17 +13,17 @@ import {
 } from "firebase/auth";
 import { auth } from "@/firebase/firebase";
 const gProvider = new GoogleAuthProvider();
-// const fProvider = new FacebookAuthProvider();
+const fProvider = new FacebookAuthProvider();
 
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
-// import ToastMessage from "@/components/ToastMessage";
-// import { toast } from "react-toastify";
+import ToastMessage from "@/components/ToastMessage";
+import { toast } from "react-toastify";
 import Link from "next/link";
 
 const Login = () => {
     const router = useRouter();
     const { currentUser, isLoading } = useAuth();
-    // const [email, setEmail] = useState("");
+    const [email, setEmail] = useState("");
 
     useEffect(() => {
         if (!isLoading && currentUser) {
@@ -46,29 +46,28 @@ const Login = () => {
           };
 
         }
-               
+            
 
-
-    // const resetPassword = async () => {
-    //     try {
-    //         toast.promise(
-    //             async () => {
-    //                 await sendPasswordResetEmail(auth, email);
-    //             },
-    //             {
-    //                 pending: "Generating reset link",
-    //                 success: "Reset email send to your registered email id.",
-    //                 error: "You may have entered wrong email id!",
-    //             },
-    //             {
-    //                 autoClose: 5000,
-    //             }
-    //         );
-    //         console.log("Email send to your registered email id.");
-    //     } catch (error) {
-    //         console.error("An error occured", error);
-    //     }
-    // };
+    const resetPassword = async () => {
+        try {
+            toast.promise(
+                async () => {
+                    await sendPasswordResetEmail(auth, email);
+                },
+                {
+                    pending: "Generating reset link",
+                    success: "Reset email send to your registered email id.",
+                    error: "You may have entered wrong email id!",
+                },
+                {
+                    autoClose: 5000,
+                }
+            );
+            console.log("Email send to your registered email id.");
+        } catch (error) {
+            console.error("An error occured", error);
+        }
+    };
 
     const signInWithGoogle = async () => {
         try {
@@ -78,13 +77,13 @@ const Login = () => {
         }
     };
 
-    // const signInWithFacebook = async () => {
-    //     try {
-    //         await signInWithPopup(auth, fProvider);
-    //     } catch (error) {
-    //         console.error("An error occured", error);
-    //     }
-    // };
+    const signInWithFacebook = async () => {
+        try {
+            await signInWithPopup(auth, fProvider);
+        } catch (error) {
+            console.error("An error occured", error);
+        }
+    };
 
     return isLoading || (!isLoading && 
         currentUser) ? (
@@ -92,7 +91,7 @@ const Login = () => {
     ) : 
      (
         <div className="h-[100vh] flex justify-center items-center bg-c1">
-            {/* <ToastMessage /> */}
+            <ToastMessage />
             <div className="flex items-center flex-col">
                 <div className="text-center">
                     <div className="text-4xl font-bold">
@@ -114,7 +113,7 @@ const Login = () => {
                     </div>
                     <div
                         className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-1/2 h-14 rounded-md cursor-pointer p-[1px]"
-                        // onClick={signInWithFacebook}
+                        onClick={signInWithFacebook}
                     >
                         <div className="flex items-center justify-center gap-3 text-white font-semibold bg-c1 w-full h-full rounded-md">
                             <IoLogoFacebook size={24} />
@@ -136,7 +135,7 @@ const Login = () => {
                         placeholder="Email"
                         className="w-full h-14 bg-c5 rounded-xl outline-none border-none px-5 text-c3"
                         autoComplete="off"
-                        // onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
                         type="password"
@@ -147,7 +146,7 @@ const Login = () => {
                     <div className="text-right w-full text-c3">
                         <span
                             className="cursor-pointer"
-                            // onClick={resetPassword}
+                            onClick={resetPassword}
                         >
                             Forgot Password?
                         </span>
