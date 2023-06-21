@@ -166,7 +166,7 @@ const Chats = () => {
         }
     };
 
-    return(
+    return (
         <div className="flex flex-col h-full">
             <div className="shrink-0 sticky -top-[20px] z-10 flex justify-center w-full bg-c2 py-5">
                 <RiSearch2Line className="absolute top-9 left-12 text-c3" />
@@ -178,7 +178,7 @@ const Chats = () => {
                     className="w-[300px] h-12 rounded-xl bg-c1/[0.5] pl-11 pr-5 placeholder:text-c3 outline-none text-base"
                 />
             </div>
-               
+
             <ul className="flex flex-col w-full my-5 gap-[2px]">
                 {Object.keys(users || {}).length > 0 &&
                     filteredChats?.map((chat) => {
@@ -228,10 +228,8 @@ const Chats = () => {
                         );
                     })}
             </ul>
-         
-
         </div>
-            );
+    );
 };
 
 export default Chats;
