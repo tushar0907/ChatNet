@@ -12,7 +12,7 @@ import {
     sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth } from "@/firebase/firebase";
-// const gProvider = new GoogleAuthProvider();
+const gProvider = new GoogleAuthProvider();
 // const fProvider = new FacebookAuthProvider();
 
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
@@ -70,13 +70,13 @@ const Login = () => {
     //     }
     // };
 
-    // const signInWithGoogle = async () => {
-    //     try {
-    //         await signInWithPopup(auth, gProvider);
-    //     } catch (error) {
-    //         console.error("An error occured", error);
-    //     }
-    // };
+    const signInWithGoogle = async () => {
+        try {
+            await signInWithPopup(auth, gProvider);
+        } catch (error) {
+            console.error("An error occured", error);
+        }
+    };
 
     // const signInWithFacebook = async () => {
     //     try {
@@ -105,7 +105,7 @@ const Login = () => {
                 <div className="flex items-center gap-2 w-full mt-10 mb-5">
                     <div
                         className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-1/2 h-14 rounded-md cursor-pointer p-[1px]"
-                        // onClick={signInWithGoogle}
+                        onClick={signInWithGoogle}
                     >
                         <div className="flex items-center justify-center gap-3 text-white font-semibold bg-c1 w-full h-full rounded-md">
                             <IoLogoGoogle size={24} />
