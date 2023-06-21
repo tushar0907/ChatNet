@@ -1,7 +1,7 @@
 import React from "react";
 import PopupWrapper from "./PopupWrapper";
 import { useAuth } from "@/context/authContext";
-// import { useChatContext } from "@/context/chatContext";
+import { useChatContext } from "@/context/chatContext";
 import Avatar from "../Avatar";
 import { db } from "@/firebase/firebase";
 import {
@@ -11,11 +11,11 @@ import {
     setDoc,
     updateDoc,
 } from "firebase/firestore";
-// import Search from "../Search";
+import Search from "../Search";
 
 const UsersPopup = (props) => {
     const { currentUser } = useAuth();
-    // const { users, dispatch } = useChatContext();
+    const { users, dispatch } = useChatContext();
 
     const handleSelect = async (user) => {
         try {
@@ -75,30 +75,32 @@ const UsersPopup = (props) => {
 
     return (
         <PopupWrapper {...props}>
-            {/* <Search /> */}
+            <Search />
 
             <div className="mt-5 flex flex-col gap-2 grow relative overflow-auto scrollbar">
-                {/* <div className="absolute w-full">
-                    {users &&
-                        Object.values(users).map((user) => (
-                            <div
-                                className="flex items-center gap-4 rounded-xl hover:bg-c5 py-2 px-4 cursor-pointer"
-                                onClick={() => handleSelect(user)}
-                            >
-                                <Avatar size="large" user={user} />
-                                <div className="flex flex-col gap-1 grow">
-                                    <span className="text-base text-white flex items-center justify-between">
-                                        <div className="font-medium">
-                                            {user.displayName}
-                                        </div>
-                                    </span>
-                                    <p className="text-sm text-c3">
-                                        {user.email}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
-                </div> */}
+                <div className="absolute w-full">
+                {users &&
+                 Object.values(users).map((user, index) => (
+                <div
+                    className="flex items-center gap-4 rounded-xl hover:bg-c5 py-2 px-4 cursor-pointer"
+                    onClick={() => handleSelect(user)}
+                    key={index}
+                 >
+                <Avatar size="large" user={user} />
+                <div className="flex flex-col gap-1 grow">
+                    <span className="text-base text-white flex items-center justify-between">
+                        <div className="font-medium">
+                            {user.displayName}
+                        </div>
+                    </span>
+                    <p className="text-sm text-c3">
+                        {user.email}
+                    </p>
+                </div>
+            </div>
+        ))}
+
+                </div>
             </div>
         </PopupWrapper>
     );

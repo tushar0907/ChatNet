@@ -3,6 +3,7 @@ import { useAuth } from '@/context/authContext';
 import { useRouter } from 'next/router';
 import LeftNav from '@/components/LeftNav';
 import Loader from '@/components/Loader';
+import Chats from '@/components/Chats';
 
 
 const Home = () => {
@@ -29,8 +30,7 @@ const Home = () => {
         <div className="flex bg-c2 grow">
             <div className="w-[400px] p-5 overflow-auto scrollbar shrink-0 border-r border-white/[0.05]">
                 <div className="flex flex-col h-full">
-                    {/* <Chats /> */} 
-                    side
+                    <Chats />      
                 </div>
             </div>
             <div>Chat</div>
